@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import org.springframework.stereotype.Repository;
 import com.desarrollo.quiz.models.Evento;
 import com.desarrollo.quiz.models.Persona;
@@ -28,8 +29,10 @@ public class EventoRepository {
 
     }
 
-    public Evento findEventoById(String idEvento){
-        return db.get(idEvento);
+    public List<Evento> findEventoByFecha(String fecha){
+        return db.values().stream()
+        .filter(u -> fecha == null || u.getFecha().contains(fecha))
+        .collect(Collectors.toList());
     }
 
     public List<Evento> getAllEventos(){
@@ -41,5 +44,8 @@ public class EventoRepository {
         return persona;
     }
 
+    public List<Persona> getParticipantesById(String idEvento) {
+        return participantes.getOrDefault(idEvento, new ArrayList<>());
+    }
 
 }
