@@ -8,6 +8,7 @@ public class Persona {
     private String email;
 
     public Persona(String nombre, String email) {
+        this.id = UUID.randomUUID().toString();
         this.nombre = nombre;
         this.email = email;
     }
