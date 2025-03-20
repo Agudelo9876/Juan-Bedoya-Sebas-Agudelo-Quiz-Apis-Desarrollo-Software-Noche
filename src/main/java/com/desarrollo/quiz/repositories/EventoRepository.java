@@ -41,6 +41,8 @@ public class EventoRepository {
 
     public Persona saveParticipante(String idEvento, Persona persona) {
         participantes.get(idEvento).add(persona);
+        String token = "token-" + persona.getId();
+        tokens.put(token, persona.getId());
         return persona;
     }
 
@@ -48,4 +50,30 @@ public class EventoRepository {
         return participantes.getOrDefault(idEvento, new ArrayList<>());
     }
 
+    public void deleteById(String idEvento, String idPersona){
+        List<Persona> eventoParticipantes = participantes.get(idEvento);
+
+        if (eventoParticipantes != null) {
+            eventoParticipantes.removeIf(persona -> persona.getId().equals(idPersona));
+            tokens.remove("token-" + idPersona);
+        }
+    }
+
+
+    public Persona findByAuthToken(String token) {
+        if (tokens.containsKey(token)) {
+            String personaId = tokens.get(token);
+            
+            // Buscar la persona en todas las listas de participantes
+            for (List<Persona> eventoParticipantes : participantes.values()) {
+                for (Persona persona : eventoParticipantes) {
+                    if (persona.getId().equals(personaId)) {
+                        return persona;
+                    }
+                }
+            }
+        }
+        
+        return null;
+    }
 }

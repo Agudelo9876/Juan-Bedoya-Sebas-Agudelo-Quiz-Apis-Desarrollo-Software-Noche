@@ -9,4 +9,6 @@ public interface IEventoService {
     List<Evento> getAllEventos();
     List<Evento> getEventoByFecha(String fecha);
     List<Persona> getAllParticipantesById(String idEvento);
+    void deleteById(String idEvento, String idPersona);
+    Persona findByAuthToken(String token);
 }
