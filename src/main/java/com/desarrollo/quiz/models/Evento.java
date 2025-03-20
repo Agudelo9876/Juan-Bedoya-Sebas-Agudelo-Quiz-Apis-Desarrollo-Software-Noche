@@ -9,6 +9,7 @@ public class Evento {
     private String hora;
 
     public Evento(String nombre, String fecha, String hora) {
+        this.id = UUID.randomUUID().toString();
         this.nombre = nombre;
         this.fecha = fecha;
         this.hora = hora;
