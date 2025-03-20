@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.desarrollo.quiz.models.Evento;
 import com.desarrollo.quiz.models.Persona;
 import com.desarrollo.quiz.services.IEventoService;
@@ -26,7 +25,7 @@ public class EventoController {
         this.eventoService = eventoService;
     }
 
-    @PostMapping("/{id}/inscribir")
+    @PostMapping("/{idEvento}/inscribir")
     public ResponseEntity<Persona> saveParticipante(@PathVariable String idEvento, @RequestBody Persona participante) {
         Persona participanteSave = eventoService.saveParticipante(idEvento, participante);
         return new ResponseEntity<>(participanteSave, HttpStatus.CREATED);
@@ -37,4 +36,6 @@ public class EventoController {
         List<Evento> participantes = eventoService.getAllEventos();
         return new ResponseEntity<>(participantes, HttpStatus.OK);
     }
+
+
 }
