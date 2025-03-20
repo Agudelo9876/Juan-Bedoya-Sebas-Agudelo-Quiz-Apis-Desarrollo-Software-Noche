@@ -4,10 +4,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -48,5 +50,18 @@ public class EventoController {
         List<Evento> eventos = eventoService.getEventoByFecha(fecha);
         return new ResponseEntity<>(eventos, HttpStatus.OK);
     }
+
+    @DeleteMapping("{idEvento}/inscripcion/{personaId}")
+    public ResponseEntity<Void> delete(@RequestHeader("Authorization") String authToken, @PathVariable String idEvento, @PathVariable String personaId){
+        Persona persona = eventoService.findByAuthToken(authToken);
+
+        if (persona != null) {
+            eventoService.deleteById(idEvento, personaId);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+    }
+
 
 }

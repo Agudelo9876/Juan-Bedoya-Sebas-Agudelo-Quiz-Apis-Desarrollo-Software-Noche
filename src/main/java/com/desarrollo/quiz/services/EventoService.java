@@ -47,4 +47,12 @@ public class EventoService implements IEventoService {
     public List<Evento> getEventoByFecha(String fecha) {
         return eventoRepository.findEventoByFecha(fecha);
     }
+
+    public void deleteById(String idEvento, String idPersona) {
+        eventoRepository.deleteById(idEvento, idPersona);
+    }
+
+    public Persona findByAuthToken(String token){
+        return eventoRepository.findByAuthToken(token);
+    }
 }
